@@ -1,0 +1,8 @@
+cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
+
+set(TAROX_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}" CACHE FILEPATH "tarox source directory" FORCE)
+set(TAROX_BIRNARY_DIR "${CMAKE_CURRENT_BINARY_DIR}" CACHE FILEPATH "tarox binary directory" FORCE)
+
+list(APPEND CMAKE_MODULE_PATH ${TAROX_SOURCE_DIR}/cmake)
+
+project(tarox CXX C ASM)
