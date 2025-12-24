@@ -1,0 +1,1 @@
+set(TAROX_PLATFORM nuttx)

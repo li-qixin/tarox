@@ -26,8 +26,8 @@ include(tarox_add_module)
 
 set(config_module_list)
 set(config_kernel_list)
-
-include(platform/${TAROX_PLATFORM}/cmake/tarox_impl_os.cmake)
-list(APPEND CMAKE_MODULE_PATH ${TAROX_SOURCE_DIR}/platform/${TAROX_PLATFORM}/cmake)
+include(tarox_config)
+include(${TAROX_SOURCE_DIR}/platforms/${TAROX_PLATFORM}/cmake/tarox_impl_os.cmake)
+list(APPEND CMAKE_MODULE_PATH ${TAROX_SOURCE_DIR}/platforms/${TAROX_PLATFORM}/cmake)
 
 project(tarox CXX C ASM)
