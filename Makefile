@@ -3,13 +3,7 @@ ifeq ($(wildcard .git),)
 endif
 
 
-all:
-	@echo building...
-	@echo FIRST_ARG: $(FIRST_ARG)
-	@echo ARGS: $(ARGS)
-	@echo SRC_DIR: $(SRC_DIR)
-	@echo j: $(j)
-	@echo ALL_CONFIG_TARGETS: $(ALL_CONFIG_TARGETS)
+all: flysq_v1_default
 
 space := $(subst ,, )
 
