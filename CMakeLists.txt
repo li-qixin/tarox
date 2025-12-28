@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
-
 set(TAROX_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}" CACHE FILEPATH "tarox source directory" FORCE)
-set(TAROX_BIRNARY_DIR "${CMAKE_CURRENT_BINARY_DIR}" CACHE FILEPATH "tarox binary directory" FORCE)
+set(TAROX_BINARY_DIR "${CMAKE_CURRENT_BINARY_DIR}" CACHE FILEPATH "tarox binary directory" FORCE)
 
 list(APPEND CMAKE_MODULE_PATH ${TAROX_SOURCE_DIR}/cmake)
 include(tarox_parse_function_args)
@@ -26,7 +25,21 @@ include(tarox_add_module)
 
 set(config_module_list)
 set(config_kernel_list)
+
+# Find Python
+find_package(PythonInterp 3)
+# We have a custom error message to tell users how to install python3.
+if(NOT PYTHONINTERP_FOUND)
+	message(FATAL_ERROR "Python 3 not found. Please install Python 3:\n"
+		"    Ubuntu: sudo apt install python3 python3-dev python3-pip\n"
+		"    macOS: brew install python")
+endif()
+
 include(tarox_config)
+include(kconfig)
+
+message(STATUS "tarox config: ${TAROX_CONFIG}")
+message(STATUS "tarox platform: ${TAROX_PLATFORM}")
 include(${TAROX_SOURCE_DIR}/platforms/${TAROX_PLATFORM}/cmake/tarox_impl_os.cmake)
 list(APPEND CMAKE_MODULE_PATH ${TAROX_SOURCE_DIR}/platforms/${TAROX_PLATFORM}/cmake)
 

@@ -1,0 +1,10 @@
+choice
+    prompt "platform"
+    default PLATFORM_NUTTX
+    config PLATFORM_NUTTX
+        bool "nuttx"
+endchoice
+
+config BOARD_PLATFORM
+    string
+    default "nuttx" if PLATFORM_NUTTX
