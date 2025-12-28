@@ -57,6 +57,7 @@ endif()
 #
 # TAROX_CONFIG_FILE: ${TAROX_SOURCE_DIR}/boards/flysq/v1/default.taroxboard
 # TAROX_BOARD_DIR: ${TAROX_SOURCE_DIR}/boards/flysq/v1
+# TAROX_BOARD: flysq_v1
 #
 # =============================================================================
 
@@ -71,7 +72,16 @@ set(TAROX_BOARD
 string(TOUPPER ${TAROX_BOARD} TAROX_BOARD_NAME)
 string(REPLACE "-" "_" TAROX_BOARD_NAME ${TAROX_BOARD_NAME})
 
-# TAROX_BOARD_NAME = FLYSQ_V1
+# =============================================================================
+#
+# TAROX_BOARD_NAME: FLYSQ_V1
+# TAROX_BOARD_VENDOR: flysq
+# TAROX_BOARD_MODEL: v1
+# TAROX_BOARD_LABEL: default
+# TAROX_CONFIG: flysq_v1_default
+#
+# =============================================================================
+
 set(TAROX_BOARD_NAME
     ${TAROX_BOARD_NAME}
     CACHE STRING "tarox board name" FORCE)
