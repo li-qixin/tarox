@@ -123,15 +123,19 @@ if(EXISTS ${BOARD_DEFCONFIG})
 
   endforeach()
 
-endif()
 
-if(PLATFORM)
+  if(PLATFORM)
   # set OS, and append specific platform module path
-  set(TAROX_PLATFORM ${PLATFORM} CACHE STRING "tarox board OS" FORCE)
-  list(APPEND CMAKE_MODULE_PATH ${TAROX_SOURCE_DIR}/platforms/${TAROX_PLATFORM}/cmake)
+    set(TAROX_PLATFORM ${PLATFORM} CACHE STRING "tarox board OS" FORCE)
+    list(APPEND CMAKE_MODULE_PATH ${TAROX_SOURCE_DIR}/platforms/${TAROX_PLATFORM}/cmake)
 
-  # platform-specific include path
-  include_directories(${TAROX_SOURCE_DIR}/platforms/${TAROX_PLATFORM}/src/tarox/common/include)
+    # platform-specific include path
+    include_directories(${TAROX_SOURCE_DIR}/platforms/${TAROX_PLATFORM}/src/tarox/common/include)
+  endif()
+
+  include(tarox_impl_os)
+  tarox_os_prebuild_targets(OUT prebuild_targets BOARD ${TAROX_BOARD})
+
 endif()
 
 if(${LABEL} MATCHES "default")
