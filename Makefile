@@ -69,7 +69,7 @@ define cmake-build
 	$(eval override CMAKE_ARGS += -DCONFIG=$(1))
 	@$(eval BUILD_DIR = "$(SRC_DIR)/build/$(1)")
 	@$(call cmake-cache-check)
-	@if [ $(TAROX_CMAKE_GENERATOR) = "Ninja" ] && [ -e $(BUILD_DIR)/Makefile]; then rm -rf $(BUILD_DIR); fi
+	@if [ $(TAROX_CMAKE_GENERATOR) = "Ninja" ] && [ -e $(BUILD_DIR)/Makefile ]; then rm -rf $(BUILD_DIR); fi
 	@if [ $(TAROX_CMAKE_GENERATOR) = "Ninja" ] && [ ! -f $(BUILD_DIR)/build.ninja ]; then rm -rf $(BUILD_DIR); fi
 	@if [ ! -e $(BUILD_DIR)/CMakeCache.txt ] || [ $(CMAKE_CACHE_CHECK) ]; then \
 		mkdir -p $(BUILD_DIR) \
