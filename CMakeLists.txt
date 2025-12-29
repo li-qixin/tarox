@@ -43,4 +43,7 @@ message(STATUS "tarox platform: ${TAROX_PLATFORM}")
 include(${TAROX_SOURCE_DIR}/platforms/${TAROX_PLATFORM}/cmake/tarox_impl_os.cmake)
 list(APPEND CMAKE_MODULE_PATH ${TAROX_SOURCE_DIR}/platforms/${TAROX_PLATFORM}/cmake)
 
+if(EXISTS "${TAROX_SOURCE_DIR}/platforms/${TAROX_PLATFORM}/cmake/init.cmake")
+  include(init)
+endif()
 project(tarox CXX C ASM)
