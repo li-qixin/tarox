@@ -46,4 +46,46 @@ list(APPEND CMAKE_MODULE_PATH ${TAROX_SOURCE_DIR}/platforms/${TAROX_PLATFORM}/cm
 if(EXISTS "${TAROX_SOURCE_DIR}/platforms/${TAROX_PLATFORM}/cmake/init.cmake")
   include(init)
 endif()
+
+#===============================================================================
+# project configuration
+#===============================================================================
 project(tarox CXX C ASM)
+
+if(NOT CMAKE_BUILD_TYPE)
+  if(${TAROX_PLATFORM} STREQUAL "nuttx")
+    set(TAROX_BUILD_TYPE "MinSizeRel")
+  else()
+    set(TAROX_BUILD_TYPE "RelWithDebInfo")
+  endif()
+
+  set(CMAKE_BUILD_TYPE ${TAROX_BUILD_TYPE} CACHE STRING "build type" FORCE)
+endif()
+
+message(STATUS "cmake build type: ${CMAKE_BUILD_TYPE}")
+
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_C_STANDARD_REQUIRED ON)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${TAROX_BINARY_DIR})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${TAROX_BINARY_DIR})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${TAROX_BINARY_DIR})
+
+#=============================================================================
+# get chip and chip manufacturer
+#=============================================================================
+tarox_os_determine_build_chip()
+if(NOT TAROX_CHIP_MANUFACTURER)
+	message(FATAL_ERROR "tarox_os_determine_build_chip() needs to set TAROX_CHIP_MANUFACTURER")
+endif()
+if(NOT TAROX_CHIP)
+	message(FATAL_ERROR "tarox_os_determine_build_chip() needs to set TAROX_CHIP")
+endif()
+
+#=============================================================================
+# nuttx added last to generate the builtin for included modules
+#=============================================================================
+add_subdirectory(platforms/${TAROX_PLATFORM})
