@@ -3,6 +3,7 @@ set(TAROX_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}" CACHE FILEPATH "tarox source 
 set(TAROX_BINARY_DIR "${CMAKE_CURRENT_BINARY_DIR}" CACHE FILEPATH "tarox binary directory" FORCE)
 
 list(APPEND CMAKE_MODULE_PATH ${TAROX_SOURCE_DIR}/cmake)
+include(tarox_message)
 include(tarox_parse_function_args)
 
 define_property(GLOBAL PROPERTY TAROX_MODULE_LIBRARIES
@@ -37,9 +38,8 @@ endif()
 
 include(tarox_config)
 include(kconfig)
-
-message(STATUS "tarox config: ${TAROX_CONFIG}")
-message(STATUS "tarox platform: ${TAROX_PLATFORM}")
+tarox_message(STATUS "tarox config: ${TAROX_CONFIG}" ${CMAKE_CURRENT_LIST_LINE})
+tarox_message(STATUS "tarox platform: ${TAROX_PLATFORM}" ${CMAKE_CURRENT_LIST_LINE})
 include(${TAROX_SOURCE_DIR}/platforms/${TAROX_PLATFORM}/cmake/tarox_impl_os.cmake)
 list(APPEND CMAKE_MODULE_PATH ${TAROX_SOURCE_DIR}/platforms/${TAROX_PLATFORM}/cmake)
 
