@@ -8,3 +8,16 @@ endchoice
 config BOARD_PLATFORM
     string
     default "nuttx" if PLATFORM_NUTTX
+
+config BOARD_TOOLCHAIN
+    string "Toolchain"
+    default ""
+
+config BOARD_ARCHITECTURE
+    string "Architecture"
+    default ""
+
+menu "platforms"
+depends on PLATFORM_NUTTX
+source "platforms/Kconfig"
+endmenu

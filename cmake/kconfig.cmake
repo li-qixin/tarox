@@ -4,7 +4,8 @@ set(BOARD_DEFCONFIG
 set(BOARD_CONFIG
     ${TAROX_BINARY_DIR}/boardconfig
     CACHE FILEPATH "path to config" FORCE)
-
+tarox_message(STATUS "BOARD_DEFCONFIG: ${BOARD_DEFCONFIG}")
+tarox_message(STATUS "BOARD_CONFIG: ${BOARD_CONFIG}")
 execute_process(COMMAND ${PYTHON_EXECUTABLE} -c "import menuconfig"
                 RESULT_VARIABLE ret)
 if(ret EQUAL "1")
@@ -117,7 +118,7 @@ if(EXISTS ${BOARD_DEFCONFIG})
     string(REPLACE "CONFIG_BOARD_" "" ConfigKey ${Name})
     if(Value)
       set(${ConfigKey} ${Value})
-      message(STATUS "${ConfigKey}: ${Value}")
+      tarox_message(STATUS "${ConfigKey}: ${Value}")
     endif()
   endif()
 

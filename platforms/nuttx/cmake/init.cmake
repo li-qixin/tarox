@@ -23,6 +23,10 @@ set(NUTTX_SRC_DIR ${TAROX_SOURCE_DIR}/platforms/nuttx/Nuttx)
 set(NUTTX_KERNEL_DIR ${TAROX_SOURCE_DIR}/platforms/nuttx/Nuttx/nuttx CACHE FILEPATH "nuttx kernel directory" FORCE)
 set(NUTTX_APPS_DIR ${TAROX_SOURCE_DIR}/platforms/nuttx/Nuttx/apps CACHE FILEPATH "nuttx apps directory" FORCE)
 
+include(tarox_git)
+tarox_add_git_submodule(TARGET git_nuttx PATH "${NUTTX_SRC_DIR}/nuttx")
+tarox_add_git_submodule(TARGET git_nuttx_apps PATH "${NUTTX_SRC_DIR}/apps")
+
 execute_process(COMMAND ${CMAKE_COMMAND} -E make_directory ${NUTTX_CONFIG_DIR}/src)
 execute_process(COMMAND ${CMAKE_COMMAND} -E copy_if_different ${NUTTX_SRC_DIR}/Make.defs.in ${NUTTX_KERNEL_DIR}/Make.defs)
 execute_process(COMMAND ${CMAKE_COMMAND} -E copy_if_different ${NUTTX_DEFCONFIG} ${NUTTX_KERNEL_DIR}/.config)
@@ -30,6 +34,9 @@ execute_process(COMMAND ${CMAKE_COMMAND} -E copy_if_different ${NUTTX_DEFCONFIG}
 
 set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS ${NUTTX_KERNEL_DIR}/defconfig)
 
+#===============================================================================
+# configure nuttx based on provided nuttx-config/*/defconfig
+#===============================================================================
 execute_process(
   COMMAND ${NUTTX_SRC_DIR}/tools/tarox_nuttx_make_olddefconfig.sh
   WORKING_DIRECTORY ${NUTTX_KERNEL_DIR}
@@ -46,12 +53,11 @@ execute_process(COMMAND ${CMAKE_COMMAND} -E copy_if_different ${NUTTX_KERNEL_DIR
 
 file(STRINGS ${TAROX_BINARY_DIR}/Nuttx/nuttx/.config ConfigContents)
 foreach(NameAndValue ${ConfigContents})
-  string(REGEX "^[]+" "" NameAndValue ${NameAndValue})
+	string(REGEX REPLACE "^[ ]+" "" NameAndValue ${NameAndValue})
   string(REGEX MATCH "^CONFIG[^=]+" Name ${NameAndValue})
   if(Name)
     string(REPLACE "${Name}=" "" Value ${NameAndValue})
     string(REPLACE "\"" "" Value ${Value})
-    
     set(${Name} ${Value} CACHE INTERNAL "NUTTX DEFCONFIG: ${Name}" FORCE)
   endif()
 endforeach()

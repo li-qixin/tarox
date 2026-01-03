@@ -36,6 +36,11 @@ if(NOT PYTHONINTERP_FOUND)
 		"    macOS: brew install python")
 endif()
 
+#===============================================================================
+# tarox_config: look for in tree board config that matches CONFIG input
+# kconfig: call script to generate a boardconfig file in binary path 
+# based on Kconfig, which is only for tarox not consider nuttx Kconfig file.
+#===============================================================================
 include(tarox_config)
 include(kconfig)
 tarox_message(STATUS "tarox config: ${TAROX_CONFIG}" ${CMAKE_CURRENT_LIST_LINE})
